@@ -4,7 +4,7 @@ import sqlite3
 
 def get_uspvdb(state:str="CA"):
     # Load the CSV file into a Pandas DataFrame
-    csv_file_path = 'raw_data/uspvdb_v2_0_20240801.csv'
+    csv_file_path = '/Users/kaorukure/code/mashafif/illuminating_horizons/raw_data/uspvdb_v2_0_20240801.csv'
     df = pd.read_csv(csv_file_path)
     # Create an in-memory SQLite database
     conn = sqlite3.connect(':memory:')
