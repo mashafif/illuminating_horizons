@@ -1,0 +1,47 @@
+├── data_exploration --> #notebook for trying stuff
+│   ├── blackmarbleapi.ipynb
+│   ├── FeatureEngineering.ipynb
+│   ├── get_geopoints2.ipynb
+│   ├── gridding_data.ipynb
+│   ├── JAXA.ipynb
+│   ├── notebook_requirements.txt
+│   ├── road.ipynb
+│   └── worldpop.ipynb
+├── dir_structure.txt --> # git ignore
+├── download_irradiance # git ignore
+├── illuminating --> #python functoins/packages directory
+│   ├── data_preparation --> #for downloading stuff (using api etc), and preprocessing prior to ml
+│   │   ├── blackmarble_data.py
+│   │   ├── country_ISO.json
+│   │   ├── geodata_processing.py
+│   │   ├── __init__.py
+│   │   └── __pycache__
+│   │       ├── blackmarble_data.cpython-310.pyc
+│   │       ├── geodata_processing.cpython-310.pyc
+│   │       └── __init__.cpython-310.pyc
+│   ├── interface --> #main code and fastapi
+│   │   ├── __init__.py
+│   │   └── main.py
+│   ├── ml --> # ml
+│   │   ├── __init__.py
+│   │   └── __init__.py:Zone.Identifier
+│   └── __pycache__
+│       └── __init__.cpython-310.pyc
+├── illuminating_horizons.egg-info 3 git ignore
+│   ├── dependency_links.txt
+│   ├── not-zip-safe
+│   ├── PKG-INFO
+│   ├── requires.txt
+│   ├── SOURCES.txt
+│   └── top_level.txt
+├── jaxa-earth-0.1.3.zip
+├── jaxa-earth-0.1.3.zip:Zone.Identifier
+├── Makefile
+├── raw_data # git ignore
+
+├── README.md
+├── requirements.txt
+├── setup.py
+└── tests
+    ├── __init__.py
+    └── test.py
