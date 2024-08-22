@@ -66,7 +66,7 @@ def import_road(
     crs:str):
 
     with open(geojson_dir) as file:
-        road_json = json.loads(file.readline())
+        road_json = json.load(file)
     geometry=[]
     for feature in road_json["features"]:
         geom_type = feature["geometry"]["type"]
@@ -80,6 +80,8 @@ def import_road(
         'geometry': geometry
     },crs=crs)
     return road_gdf
+
+
 
 
 
