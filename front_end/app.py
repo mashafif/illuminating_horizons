@@ -3,50 +3,45 @@ from streamlit_folium import st_folium
 import streamlit as st
 from folium import plugins
 import requests
+from streamlit.components.v1 import html
 
-geo_json_data = requests.get(
-    "https://raw.githubusercontent.com/python-visualization/folium-example-data/main/us_states.json"
-).json()
+def create_folium_map():
 
-st.title("Illuminating Horizons")
+    geo_json_data = requests.get(
+        "https://raw.githubusercontent.com/python-visualization/folium-example-data/main/us_states.json"
+    ).json()
 
-def get_pos(lat,lng):
-    return lat,lng
+    CENTER_START = [39.0997, -94.5786]
+    ZOOM_START = 3
 
-CENTER_START = [39.0997, -94.5786]
-ZOOM_START = 8
+    # if "click" not in st.session_state:
+    #     st.session_state["click"] = 0
+    # if "center" not in st.session_state:
+    #     st.session_state["center"] = CENTER_START
 
-if "click" not in st.session_state:
-    st.session_state["click"] = 0
-if "center" not in st.session_state:
-    st.session_state["center"] = CENTER_START
+    m = fl.Map(location=CENTER_START, #st.session_state["center"],
+            zoom_start=ZOOM_START,
+            width='100%',
+            height='100%'
+            )
 
-m = fl.Map(location= st.session_state["center"],
-           tiles="OpenStreetMap",
-           zoom_start=min(4+4*st.session_state["click"],15),
-           max_zoom=min(4+4*st.session_state["click"],15))
+    m.add_child(fl.LatLngPopup())
 
-m.add_child(fl.LatLngPopup())
+    fl.GeoJson(geo_json_data).add_to(m)
 
-fl.GeoJson(geo_json_data).add_to(m)
+    return m
 
-fl.raster_layers.ImageOverlay(
-    image="https://upload.wikimedia.org/wikipedia/commons/f/f4/Mercator_projection_SW.jpg",
-    name="jpeg",
-    bounds=[[-82, -180], [82, 180]],
-    opacity=1,
-    interactive=False,
-    cross_origin=False,
-    zindex=1,
-    alt="Wikipedia File:Mercator projection SW.jpg",
-).add_to(m)
+def main():
+    st.title("Illuminating Horizons")
 
-fl.LayerControl().add_to(m)
+    # Create the Folium map
+    folium_map = create_folium_map()
 
-map = st_folium(m, height=500, width=750)
+    # Convert Folium map to HTML
+    map_html = folium_map._repr_html_()
 
-if map['last_clicked'] is not None:
-    st.session_state["click"] += 1
-    data = get_pos(map['last_clicked']['lat'],map['last_clicked']['lng'])
-    st.session_state["center"] = data
-    st.write(data)
+    # Display the Folium map in Streamlit
+    html(map_html, height=800, width=1200)
+
+if __name__ == "__main__":
+    main()
