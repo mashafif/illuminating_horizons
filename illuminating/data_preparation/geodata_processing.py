@@ -66,7 +66,7 @@ def import_road(
     crs:str):
 
     with open(geojson_dir) as file:
-        road_json = json.loads(file.readline())
+        road_json = json.load(file)
     geometry=[]
     for feature in road_json["features"]:
         geom_type = feature["geometry"]["type"]
@@ -206,6 +206,8 @@ def get_jaxa_average(
         gdf_res[feature_name] +=gdf[feature_name].copy()
     gdf_res[feature_name] = gdf_res[feature_name]/len(gdf_list)
     return gdf_res
+
+
 
 if __name__ == "__main__":
     print(download_gdf("Afghanistan"))
