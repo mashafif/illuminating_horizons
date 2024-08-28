@@ -557,7 +557,7 @@ if __name__ == '__main__':
     start_time = time.time()
     try:
         #preprocessing_and_train()
-        predict(country="USA",state="California")
+        predict(country="USA",state="Arizona")
 
 
 
