@@ -34,7 +34,7 @@ bearer = "your_bearer_token_here"
 PRODUCT = 'VNP46A4'
 YEAR = 2023
 #country='CONUS'
-country='JPN'
+country='ITA'
 state = ''
 
 # Geometry
@@ -137,24 +137,33 @@ gdf_shape = gdf.to_crs("EPSG:3857")
 shapes = [mapping(geom) for geom in gdf_shape.geometry]
 mask = features.geometry_mask(shapes, transform=transform, invert=True, out_shape=reprojected_population.shape)
 population_masked = np.where(mask, reprojected_population, np.nan)
+population_masked[population_masked == 0] = 0.01
 
-# Population Data Visualization
-population_masked_clean = np.where(np.isnan(population_masked) | (population_masked < 0), 0, population_masked)
+# Replace any negative or NaN values with a small positive number to avoid issues with log1p
+population_masked_clean = np.where(np.isnan(population_masked) | (population_masked < 0), 0.01, population_masked)
+
+# Apply log1p to the cleaned data
 population_log = np.log1p(population_masked_clean)
+
+# Aggressive clipping to remove outliers
 clipped_population = np.clip(population_log, np.nanmin(population_log), np.nanpercentile(population_log, 90))
+
+# Normalize the clipped data
 if np.nanmin(clipped_population) != np.nanmax(clipped_population):
     population_normalized = (clipped_population - np.nanmin(clipped_population)) / (np.nanmax(clipped_population) - np.nanmin(clipped_population))
 else:
     population_normalized = clipped_population  # If no variation, keep the data as is
+
 #Lighten
 population_normalized = np.round(population_normalized, decimals=data_precision)
 
 #pop_colormap = plt.cm.inferno
-pop_colormap = plt.cm.coolwarm
+pop_colormap = plt.cm.Blues
 population_colored = pop_colormap(population_normalized)
 population_rgb = (population_colored[..., :3] * 255).astype(np.uint8)
 
 alpha_channel = np.where(population_masked > 0, 255, 0).astype(np.uint8)
+
 population_rgba = np.dstack((population_rgb, alpha_channel))
 
 # Convert the RGBA array to an image
@@ -178,27 +187,15 @@ folium.TileLayer(
     attr='Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.'
 ).add_to(m)
 
-'''# Light Data Overlay
-overlay = ImageOverlay(
-    image=img_url,
-    bounds=[[y_reprojected.min(), x_reprojected.min()], [y_reprojected.max(), x_reprojected.max()]],
-    opacity=0.6,
-    name='Light Intensity',
-    interactive=True,
-    cross_origin=False,
-    zindex=1,
-    id='light-overlay'
-)
-overlay.add_to(m)
 
-# Add Population Density Overlay
+# Add Population Density Overlay with matching bounds
 pop_overlay = folium.raster_layers.ImageOverlay(
     image=pop_img_url,
     bounds=[[y_reprojected.min(), x_reprojected.min()], [y_reprojected.max(), x_reprojected.max()]],
     opacity=0.6,
     name="Population Density"
 )
-pop_overlay.add_to(m)'''
+pop_overlay.add_to(m)
 
 # Apply consistent bounds to both overlays
 overlay = ImageOverlay(
@@ -213,14 +210,6 @@ overlay = ImageOverlay(
 )
 overlay.add_to(m)
 
-# Add Population Density Overlay with matching bounds
-pop_overlay = folium.raster_layers.ImageOverlay(
-    image=pop_img_url,
-    bounds=[[y_reprojected.min(), x_reprojected.min()], [y_reprojected.max(), x_reprojected.max()]],
-    opacity=0.6,
-    name="Population Density"
-)
-pop_overlay.add_to(m)
 
 # Add Solar Power Plant Markers
 solar_fg = FeatureGroup(name='California Solar Power Plants')
