@@ -481,7 +481,7 @@ folium.LayerControl(position='topright').add_to(m)
 # Save the map to an HTML file
 output_file = f'MAP_{country}'
 if state != '': output_file += f'-{state}'
-output_file += '2.html'
+output_file += '3.html'
 m.save(output_file)
 
 # Optionally open the map in the default web browser
