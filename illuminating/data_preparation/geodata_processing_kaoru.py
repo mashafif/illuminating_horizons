@@ -25,7 +25,7 @@ def download_gdf(
     import glob
     countries = [x.split('/')[-1].split('.')[0].split('_')[1] for x in glob.glob('../raw_data/gadm_gdf/gdf_*.geojson')]
     if country in countries:
-        print(f'Country {country} is cound in local file')
+        print(f'Country {country} is found in local file')
         gdf = geopandas.read_file(f'../raw_data/gadm_gdf/gdf_{country}.geojson')
     else:
         base_url = "https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41"

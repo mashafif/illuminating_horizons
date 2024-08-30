@@ -33,8 +33,8 @@ from state_dict import iso_to_state, state_to_iso
 bearer = "your_bearer_token_here"
 PRODUCT = 'VNP46A4'
 YEAR = 2023
-#country='CONUS'
-country='KOR'
+country='CONUS'
+#country='KOR'
 state = ''
 
 # Geometry
@@ -124,49 +124,7 @@ except ValueError:
     data_masked = data
 
 
-# Masking Night Data
-try:
-    mask = features.geometry_mask(shapes, transform=transform, invert=True, out_shape=(data_array.sizes['y'], data_array.sizes['x']))
-    data_masked = np.where(mask, data, np.nan)
-except ValueError:
-    data_masked = data
 
-# Reproject Night Data
-def reproject_night_data(data, transform, width, height):
-    data_reprojected = np.empty((height, width), dtype=np.float32)
-    reproject(
-        source=data,
-        destination=data_reprojected,
-        src_transform=transform,
-        src_crs='EPSG:4326',  # Assuming the original CRS is EPSG:4326
-        dst_transform=transform,
-        dst_crs='EPSG:3857',
-        resampling=Resampling.nearest
-    )
-    return data_reprojected
-
-# Reprojecting night data
-night_transform, night_width, night_height = calculate_default_transform('EPSG:4326', 'EPSG:3857', data_array.sizes['x'], data_array.sizes['y'], min_lon, min_lat, max_lon, max_lat)
-data_reprojected = reproject_night_data(data_masked, night_transform, night_width, night_height)
-
-# Convert to image
-image = Image.fromarray((data_reprojected * 255).astype(np.uint8))
-
-# Display Night Data on Folium Map
-overlay = ImageOverlay(
-    image=image,
-    bounds=[[min_lat, min_lon], [max_lat, max_lon]],
-    opacity=0.6,
-    name='Night Intensity',
-    interactive=True,
-    cross_origin=False,
-    zindex=1
-)
-overlay.add_to(m)
-
-# Add Layer Control and Save
-folium.LayerControl(position='topright').add_to(m)
-m.save('night_map.html')
 
 # Reproject Night Data
 # For the night data, we will reconstruct the transform based on the data_array's x and y coordinates
