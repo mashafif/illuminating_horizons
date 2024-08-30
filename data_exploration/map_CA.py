@@ -33,12 +33,12 @@ from state_dict import iso_to_state, state_to_iso
 PRODUCT = 'VNP46A4'
 YEAR = 2023
 #country='CONUS'
-country='USA'
+"""country='USA'
 state = 'CA'
-STATE = 'California'
-"""country='GHA'
+STATE = 'California'"""
+country='GHA'
 state = ''
-STATE = ''"""
+STATE = ''
 
 if state=='':
     STATE = country
@@ -254,7 +254,7 @@ light_overlay.add_to(m)
 
 #########ROAD
 # Load the road GeoJSON data
-road_gdf = gpd.read_file('../raw_data/additional/road.geojson')
+'''road_gdf = gpd.read_file('../raw_data/additional/road.geojson')
 
 # Reproject to EPSG:3857
 road_gdf = road_gdf.to_crs(epsg=3857)
@@ -317,7 +317,7 @@ road_overlay = ImageOverlay(
     name='Roads'
 )
 
-road_overlay.add_to(m)
+road_overlay.add_to(m)'''
 
 #########ROAD
 
@@ -430,6 +430,50 @@ if country in ['USA','CONUS']:
         """
         Marker(location=[row['ylat'], row['xlong']], popup=row['p_name'], icon=folium.DivIcon(html=icon_html)).add_to(solar_fg)
     solar_fg.add_to(m)
+
+
+
+
+
+#SUG
+# Define marker locations
+# Define marker locations and corresponding images
+locations = [
+    {'lat': 6.608169536418913, 'lon': 0.2628256317421865, 'popup': 'Suggestion 1', 'image': '../suggestion1.png'},
+    {'lat': 9.581142569773737, 'lon': -0.6013499001133938, 'popup': 'Suggestion 2', 'image': '../suggestion2.png'},
+    {'lat': 7.013574944365997, 'lon': -1.4655254926660755, 'popup': 'Suggestion 3', 'image': '../suggestion3.png'}
+]
+
+Suggestion_fg = FeatureGroup(name='Suggested points')
+
+# Teardrop SVG style with black fill and yellow stroke
+teardrop_icon = (
+    '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="40" viewBox="0 0 24 24" fill="black" stroke="yellow" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin">'
+    '<path d="M21 10c0 6.075-9 13-9 13S3 16.075 3 10a9 9 0 1118 0z"></path>'
+    '<circle cx="12" cy="10" r="3"></circle>'
+    '</svg>'
+)
+
+# Add custom teardrop markers to the FeatureGroup
+for loc in locations:
+    # Create the HTML for the popup including the image
+    popup_html = f'<div style="width: 620px;"><h4>{loc["popup"]}</h4><img src="{loc["image"]}" width="600px" height="600px"></div>'
+    popup = folium.Popup(popup_html, max_width=600)
+
+    # Add the marker with the popup to the map
+    icon = folium.DivIcon(html=teardrop_icon)
+    folium.Marker(
+        location=[loc['lat'], loc['lon']],
+        popup=popup,
+        icon=icon
+    ).add_to(Suggestion_fg)
+
+# Add the FeatureGroup to the map
+Suggestion_fg.add_to(m)
+
+
+
+
 
 # Add Layer Control with custom position on the left
 folium.LayerControl(position='topright').add_to(m)
