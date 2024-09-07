@@ -330,7 +330,7 @@ def predict_per_chunk(pred_gdf,border_gdf,radiation_gdf,
                       temperature_gdf,pop_gdf,road_gdf,power_gdf,landcover_gdf,
                       country="USA",
             model_file = "Random Forest_model.pkl",
-            features:list=BASE_FEATURES):
+            features:list=BASE_FEATURES,raw=True):
 
 
         # 2. Get population data
@@ -339,8 +339,9 @@ def predict_per_chunk(pred_gdf,border_gdf,radiation_gdf,
     pred_gdf["geometry"] = pred_gdf["geometry"].to_crs(epsg=32733).centroid.to_crs(epsg=4326)
     print(f"After centroid: {pred_gdf.shape}")
 
-    pred_gdf = pred_gdf.drop_duplicates(subset=["geometry"])
-    print(f"After dropping after centroid: {pred_gdf.shape}")
+    if not raw:
+        pred_gdf = pred_gdf.drop_duplicates(subset=["geometry"])
+        print(f"After dropping after centroid: {pred_gdf.shape}")
 
     print(f"1. Combining with population")
 
@@ -348,8 +349,9 @@ def predict_per_chunk(pred_gdf,border_gdf,radiation_gdf,
                                             "distance_to_population")
     print(f"Size after population combined: {pred_gdf.shape}")
 
-    pred_gdf = pred_gdf.drop_duplicates(subset=["geometry"])
-    print(f"Size after drop duplicate: {pred_gdf.shape}")
+    if not raw:
+        pred_gdf = pred_gdf.drop_duplicates(subset=["geometry"])
+        print(f"Size after drop duplicate: {pred_gdf.shape}")
 
 
 
@@ -361,8 +363,9 @@ def predict_per_chunk(pred_gdf,border_gdf,radiation_gdf,
 
     print(f"Size after population combined: {pred_gdf.shape}")
 
-    pred_gdf = pred_gdf.drop_duplicates(subset=["geometry"])
-    print(f"Size after drop duplicate: {pred_gdf.shape}")
+    if not raw:
+        pred_gdf = pred_gdf.drop_duplicates(subset=["geometry"])
+        print(f"Size after drop duplicate: {pred_gdf.shape}")
 
 
 
@@ -373,8 +376,9 @@ def predict_per_chunk(pred_gdf,border_gdf,radiation_gdf,
                                                     "distance_to_powerline")
     print(f"Size after powerline combined: {pred_gdf.shape}")
 
-    pred_gdf = pred_gdf.drop_duplicates(subset=["geometry"])
-    print(f"Size after drop duplicate: {pred_gdf.shape}")
+    if not raw:
+        pred_gdf = pred_gdf.drop_duplicates(subset=["geometry"])
+        print(f"Size after drop duplicate: {pred_gdf.shape}")
 
 
 
@@ -385,8 +389,9 @@ def predict_per_chunk(pred_gdf,border_gdf,radiation_gdf,
     pred_gdf = sjoin_nearest_illuminating(pred_gdf,radiation_gdf)
     print(f"Size after radiation combined: {pred_gdf.shape}")
 
-    pred_gdf = pred_gdf.drop_duplicates(subset=["geometry"])
-    print(f"Size after drop duplicate: {pred_gdf.shape}")
+    if not raw:
+        pred_gdf = pred_gdf.drop_duplicates(subset=["geometry"])
+        print(f"Size after drop duplicate: {pred_gdf.shape}")
 
 
 
@@ -397,8 +402,9 @@ def predict_per_chunk(pred_gdf,border_gdf,radiation_gdf,
     pred_gdf = sjoin_nearest_illuminating(pred_gdf,temperature_gdf)
     print(f"Size after temperature combined: {pred_gdf.shape}")
 
-    pred_gdf = pred_gdf.drop_duplicates(subset=["geometry"])
-    print(f"Size after drop duplicate: {pred_gdf.shape}")
+    if not raw:
+        pred_gdf = pred_gdf.drop_duplicates(subset=["geometry"])
+        print(f"Size after drop duplicate: {pred_gdf.shape}")
 
 
 
@@ -408,8 +414,9 @@ def predict_per_chunk(pred_gdf,border_gdf,radiation_gdf,
     pred_gdf = sjoin_nearest_illuminating(pred_gdf,landcover_gdf)
     print(f"Size after landcover combined: {pred_gdf.shape}")
 
-    pred_gdf = pred_gdf.drop_duplicates(subset=["geometry"])
-    print(f"Size after drop duplicate: {pred_gdf.shape}")
+    if not raw:
+        pred_gdf = pred_gdf.drop_duplicates(subset=["geometry"])
+        print(f"Size after drop duplicate: {pred_gdf.shape}")
 
 
     pred_gdf.drop(columns=["population","population_percentile"],inplace=True)
@@ -469,7 +476,7 @@ def read_geojson_in_chunks(session, sql, chunk_size=1000):
 def predict(country="USA",
             state="California",
             model_file = "Random Forest_model.pkl",
-            features:list=BASE_FEATURES):
+            features:list=BASE_FEATURES,raw=True):
         ## Get the border data for the target country or state/province
     country_gdf = download_gdf(country,1)
     engine = create_engine(SQL_URL)
@@ -538,14 +545,14 @@ def predict(country="USA",
             if first_chunk:
                 pred_gdf = predict_per_chunk(pred_gdf,border_gdf,radiation_gdf,
                             temperature_gdf,pop_gdf,road_gdf,power_gdf,landcover_gdf,country=country,
-                features=features)
+                features=features,raw=raw)
                 write_geojson(pred_gdf, output_file, mode='w')
                 first_chunk = False
             else:
                 # Append subsequent chunks to the file
                 pred_gdf = predict_per_chunk(pred_gdf,border_gdf,radiation_gdf,
                             temperature_gdf,pop_gdf,road_gdf,power_gdf,landcover_gdf,country=country,
-                features=features)
+                features=features,raw=raw)
                 write_geojson(pred_gdf, output_file, mode='a')
 
         # Close the engine
@@ -557,7 +564,7 @@ if __name__ == '__main__':
     start_time = time.time()
     try:
         #preprocessing_and_train()
-        predict(country="USA",state="Arizona")
+        predict(country="USA",state="California",raw=True)
 
 
 

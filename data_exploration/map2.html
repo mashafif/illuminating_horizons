@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_04240aa66fabb8c93db1af691a3251cd {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    
+                <style>
+                    .leaflet-image-layer {
+                        /* old android/safari*/
+                        image-rendering: -webkit-optimize-contrast;
+                        image-rendering: crisp-edges; /* safari */
+                        image-rendering: pixelated; /* chrome */
+                        image-rendering: -moz-crisp-edges; /* firefox */
+                        image-rendering: -o-crisp-edges; /* opera */
+                        -ms-interpolation-mode: nearest-neighbor; /* ie */
+                    }
+                </style>
+            
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_04240aa66fabb8c93db1af691a3251cd" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_04240aa66fabb8c93db1af691a3251cd = L.map(
+                "map_04240aa66fabb8c93db1af691a3251cd",
+                {
+                    center: [37.283152381810325, -119.26459721862112],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 10,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_381302cc5be3b9ba17941de2d5c22b45 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_381302cc5be3b9ba17941de2d5c22b45.addTo(map_04240aa66fabb8c93db1af691a3251cd);
+        
+    
+            var image_overlay_0011ba4939e437d08177de2cbe32c7c4 = L.imageOverlay(
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADQCAAAAADU/lmuAAANB0lEQVR4nNVd2bbrIAiFs+7//zL3QZFBMKbNQPdDTxNNjzsok8YAABAQAED/dCBqRUTUvwMR9EM5Vxd/AICAAIPgUZNpfCAAHl3wPv9/AEBIMHj2TwBC0HRMGQASAPVKKxyV34+/vBVEEzXirwjIdwTGnbBXX9jIr/AHABRyROQ/aNpLBNCHYKswaKs64C56Ef+gj6ekOTjRR8IhyJQDIVTooQBNhgAUiZGmL/1IdV6MaZQRIDBDxKSr+oYGepNWsiyAf/xl5pdIx59G6D338Np38HeyfiYtst+oddQKsh0M48Y0jYLuhEW3jGJd+EsySB/GYLhozGwXpQiauUDsCplUfy0mwwh0OKB0Mc7eLVagqOCbIx62OhHUJhaX9NJCzFiGFBAE9jtVx5s7LAF2ZRrQKsBU9VJEmiho30ULTbUc428FuDUww+Y+22Yh9g8aVcA45I6zod292veJ/tMHmKkW9AcSaInuHF5RBRsh6DJsEa3SFhY0H/CpAylVYcvZiciCqXOzjhwJkPnm0Dj/LrrnTXmyBgGJhg4aWRswZ5pGIlL5m3bx+zLsvbSNwKQ9VpMasXB8T8gFaC97H2ocEhIFuSXfULQjDxEpStdglZhK6dIWvI8IfpwOgiOtUIdp0M5BnRCfY/x2y4OMy5Ru02f18ZQIqCFBifFlDO35XuhKZAjjVPYuVHyI4FQFQKTunabxaQ4oQ62jZRNH7Gr+bCHo1eKTV+iqPSPc/C9UegKmrxpZEtmom3bmbfSMsKTwHTZb2KshOC1bwuLTZB8YbVjuJBmt1MTPK9JLkYCIprQRiUTOCoLCry/hL82ILWlFEcVIZtTCnzKEafQUBRxhtUqxPeOPrTwBBuYQUrnMcRSWGHYTml+KQKij9Q11H8zkBL72+6oU/sTvjFJK+23s4ZPTSgWk+icZjHON8d4aAaeuRnxRQIAA8OeaNSMJjMOIEEAZfwpDlceh86VppWP92rWwSn0TBtXeQNM0WRZxD6yYgkxUAXB8uLbv69/A1ssz5+9lqF56PnRSyW9ki0o8u1+F7TwOs0B/hsR/HDNh7w1IXXcV0Kd+/rBbR9ewqJ2zpvS1sMQahn/ueNx9jaSZ3BVbcGlWDkmY/zo8w2SiPkSjNOL69ztkCN1LJXcPsHX7EZJ1OMRhcLFxKDbaunCpYqTMkCK2blvALbWaBvmmx2nhBESJ11Oj485rMThMPE64cbVFnqcARcuwD5+pc6UNXXgJFfJsAKG1OIc4MVBCeg1Whphpv0V7s0xrFYRromaWBxTKCCxAwPBkRonHbpiyKiBcw5Dbg9NobC51OomBzTQEcf8FTfwS1h4e3PK4uA3EislgAPAy1Bnd7eV3qZ+XeAIPw8swzkhkp1yRq4HHD5w8AK9pum86XNQNQfqIKSh6E5M9bH9bYGQjh8Vkac8LzEnXar1U0GJagI02Eq8UwppB4mIV9FhWeqRz+E7U7KYZQ7ST8sslFplrWgMZQxquG+tJSp1WKKEzM6xkuD9Xhr9i8S02MooMUp+24H3aU65NQEi6V6YLUhiRz1eg965kyKMrzGf4ZHANBybAwTMzJJOA6MtczRJdMsCKYfNWqD1/eSwg3LGdz2MxDoeLMix68hRmh56lKYRchoF+jCda0AS/1QguGJqQgfj5u6m79vXc1fqm4OgZUpQcamTTsS2JI3WiGo6fkh1DsU99GpDuuvKIVCUcMCSzxCJc+DaOx8MMtXDAUAYjIvp9BJYWsgwOeynPxm8nbqoR3RqHw3BkE2m+aiXsPI+vslMmQAxn1cpR3NtxgPjD+2SiZoDpVtM1m3sqNCbYV8vwSTQVMLiiALYYsnBIJWxwMo5k1peWEeUWQ07RdKZjEU2WtfFLHV7FMrYYkP5o0qKWBfsDGCyXehE7Mjw7Q9NkXCVQ3LcWAOAW26RrpcrID+CkLu1xRos0XOQY1K6BrXE4woc5NdVPnEqz0aNZq00ZjgYN229wTmgH2ZCLcXYXJVm5j8E5jYWmwa1aF2HPWkTQj9h8ngu+X5hnZQigjT8EkzX5NLnBY8mdTxgCmAUNc+HO1OpjI/FThjlOrMB4hOUHDI+9Fat5X8YJhtNakpY+jdRo+9z29m69EScYst1HTnJjbBxb3fZnc53DnRRP9VJpMGW2X8pXxU/i3DhEGlteEQC1BetLfbE5ZG+8FecYNrmRPdy45E187tMASHYmHW8F4qhzDKepC9vJZqKElG6Rpn/hxjvxgT1E3yiXQzVYpHNMtfs683mGnGnTg1BEGQVWh63fW0D3Ic4zxCTZvcKOUb+ro34iQ2OjW+rwuHmvZaY+kGHrps733FyqkZfdho9iCxobDCCEi6WiFi9V6o0UP7CHY+pCMkqTBo2vXORn7qP4eXxoe91eC99wAL6JgNVY3Mye5Tq1kj3UwLOWLFW69z31/Q1DtbWHXcKwuiYtqWMPGeQPdoTwwkz/V5oGus2A7cfdFnfiLpfgY4ami55L08dMsl/4lvfn8WGT4ZiD2N8i4uSA+3Z8fixD0S3r+G/Gqjve0FG/sof9D2WuzdmfS1538t0A/SqLIU9GEQD2x0j33soSjtzE5nx34y7M6uNmlIFmZkfjFmX6FUN7z5W/sk4wkn3RhyuEi5l+LcNzqn8JBIBk7+zFvzrC1wzdQo3vgW0pbljyic75fhyenOFWlaJznOdK/9dpjtfPH66RreYIa50sinEFQz/FtpbgeFNd2NbrX/lxBcOREmXLuKxL+XTHdgx2BtfIUBy4zaVAcS26I8K4ahyOOZp2eMSTIOrMnDqvZQ8bmp/CvNLeZsfrM3mp72bXHGjIkmwwxZSbglmI6IZ3C11pLWRPDURwjplY62XspGfHLyJ7JUOT6DdzTqSq4FRd/YC1Ope06gmLr7P+B04ejb+XqZtrGXL7KThqX6MAN2NzjSa6luGIa3kgTY3kqQ40WiXuudcsJbpahq7V7hlps9iYN8HROVRH6Qop3iRDaAttUAsCe/kc4yLSldrT4kYZGu9adpz0CTqU4ltwtS4VSqSaLhM458bWFQr1DmvRU4v8aDRae8jZisWlUtPVCjXxAS712gD0DHH/YH2irWLXL8jf9OnAco4r5tsSv9BB4441wt0a8iZ9ndz8ClOfRh4BxyoPN2qan1rMTF7PEI37LGIyTOZ9C4ebgKH7vXpEB5YrBC5naGUQO2mxF9MnlENdZC+eixeq+JZxePz/P0h5t3EcrwNc2ZrbPe/0vZETVoLA3re56okGPJpNlJeFmFdFdx2znvfA4U9Q1vljPMWwjzEEkN2ZhGM73U9Gl+s9jOwtOOwgD2eEWatOPde+JtoY1EV2dQeXa5oEI7RF2YdfZGnjD3HOxUlHLe6Df2Wr3CTDbHSgVjzKqJCqMB6ZJu8h7UnS1bmJYfxyq1SrBhkdJcyWqYw3Kra/Et3Y28aha0xuMuQ9J3IPjNiUgI/+ZVThQU1jHdAJKga2cYXoWNLHMebCp2fXAGBwbS/D1lkBY+gMMxqJyPXMyFx4G8O1JW5vxuDtw/RZE4K4FEE/ey4svnMcLpKeqdJoLxmcImeQJQxnHwS/h6FMVp/PQ0gQKO8JHTms0O9e4x6GJ1fW+lB4oBkL6CORPkpY3a1pEGEx62kSi6tK/cc+SUzdy7DlL9TbSqaQQkbVsYr8bC/tO/3SkY5R29uYgSThBAIQsrU47XouDcgT9lDl7ZWz7eo4s6Ewvax92vxveUueml2bUjc2XPJB3+So2dV+pIsqggfjeElYmFyLc1Lq8j284LWR9DbWNIE4coPDN2eT5Vt+qbw3K/d7jt7xukfyqRhfge17N+WY6cLMPVNjdGcovsAQwCXL8uyaBxmj/+hWRZ+A7Hdz2I8nb8g6DKvCSiCvUFjRTruDN+Kyr4O7qtBGfwfou4EQefYno/uGOj3ZzSMS6NxxOwmr9maB1SvWIoQhOL70Tik74G0F1brOS7r0BNBLJ7ItZHMbZV/UMEBaMdpURuzNkT+SE3V6qQZ7PES0ZwPQODhGfpUYumBjFRoHpDPzWonheB/PsIcAYFIdKoTyFNMUTiWGTXKsV1BP4Yg8zag06/77FCU4s1KKIQBoEmPiIq4oKzwkB9BcBXXxL1gL52Frn93P/jw79/QFvIpJ1n5tzl9UZCiQ+acoz7FcFB/Mw/4SCCV8lpN9wadzgWrLMEXXnjyXMQxgILDfZKgntgj6e/2SxHhlhsQh73S+wcyIC8vyyQ2B8bynjMUooHV4X1mGSapNBLuV16/MsMPPLiKwjgFIJKzxAwwVmsOJwCvkwOSH+Yul+wMMx2b+ik5bZGNe7BOtagD4CYbBKFMrvp2LN3fX6gxdnNHRl4DhKNALOByqM+SYN1yuSVp0PxEB55ibPx514BPZ9PKPMITMIBy7L7/D0C1OoMQSTjfidxgeQpZxGtRnOAe6lHzPTxVH2GKenVosaPglrNO/B/gPNQZQPv8FHhAAAAAASUVORK5CYII=",
+                [[32.59846791479585, -124.33069186527484], [41.967836848824795, -114.1985025719674]],
+                {"opacity": 0.6}
+            );
+        
+    
+            image_overlay_0011ba4939e437d08177de2cbe32c7c4.addTo(map_04240aa66fabb8c93db1af691a3251cd);
+        
+    
+            var layer_control_e85982a54dd63e8391463dccdd45ac45_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_381302cc5be3b9ba17941de2d5c22b45,
+                },
+                overlays :  {
+                    "Raster Layer" : image_overlay_0011ba4939e437d08177de2cbe32c7c4,
+                },
+            };
+            let layer_control_e85982a54dd63e8391463dccdd45ac45 = L.control.layers(
+                layer_control_e85982a54dd63e8391463dccdd45ac45_layers.base_layers,
+                layer_control_e85982a54dd63e8391463dccdd45ac45_layers.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_04240aa66fabb8c93db1af691a3251cd);
+
+        
+</script>
+</html>

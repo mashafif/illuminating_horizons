@@ -1,0 +1,25 @@
+Key Value|Type|Key Description
+case_id|integer|Unique stable identification number.
+multi_poly|string|Indicates the facility's polygon type. single— facility is represented by a single part polygon. multi— facility is represented by multipart polygon composed of at least two discontinuous polygons, sharing a single record.
+eia_id|integer|Unique facility identifier from Energy Information Administration (EIA), may be used to link with other EIA data fields.
+p_state|string|State where facility is located.
+p_county|string|County where facility is located.
+ylat|float|Latitude value of a point representation of the LSPV facility's location. For single-array facilities, values are calculated in the center of the array. For multi-part polygons, values are generated within the array that is closest to the centroid of the multipart polygon.
+xlong|float|Longitude value of a point representation of the LSPV facility's location. For single-array facilities, values are calculated in the center of the array. For multi-part polygons, values are generated within the array that is closest to the centroid of the multipart polygon.
+p_area|float|Area of the facility array(s) in square meters (m2).
+p_img_date|integer|Date of the aerial image used to confirm the facility location and geometry. Derived from aerial image vendor (Maxar) metadata.
+p_dig_conf|integer|Level of confidence in project location. 1— Multiphase facility or multiple EIA records with identical location. Single polygon used to represent multiple facilities indistinguishable from one another; attributes may not reflect full scope of facilities. 2—Multiple polygons created, but EIA records are unclear; attributes may not reflect full scope of facilities. 3— Polygon reflects only a part of the facility due to poor image quality; area of polygon may not reflect the full size of array(s). 4— Facility polygon created with high confidence.
+p_name|string|Facility name.
+p_year|integer|Year in which facility installation was completed.
+p_pwr_reg|string|Common abbreviation of regional power authority name.
+p_tech_pri|string|Electric generation technology type.
+p_tech_sec|string|Additional detail on panel type.
+p_axis|string|Array axis type.
+p_azimuth|integer|Array azimuth (i.e., east-west orientation) in degrees (°).
+p_tilt|integer|Tilt angle of panels (i.e., angle of panels from horizontal) in degrees (°).
+p_battery|string|Indicator of the presence of battery storage at the facility.
+p_cap_ac|float|Facility AC capacity in megawatts (MW).
+p_cap_dc|float|Facility DC capacity in megawatts (MW).
+p_type|string|General categorization of facility. greenfield—greenfield sites represent the majority of LSPV facilities and occupy land that may have previously been wildland, urbanized, cultivated, or reclaimed. RCRA—Resource Conservation and Recovery Act (RCRA) sites are a specific category of commercial, industrial, and federal facilities that treat, store or dispose of hazardous wastes and that require cleanup under the RCRA Hazardous Waste Corrective Action Program. superfund—superfund sites are inactive or abandoned contaminated facilities or locations where there is an active release or threatened release into the environment of hazardous substances that have been dumped, discharged, emitted or otherwise improperly managed. These sites may include manufacturing and industrial facilities, processing plants, landfills, and mining sites, among others. AML—sites include abandoned hardrock mines and mineral processing sites listed in the Superfund Enterprise Management System. landfill—sites that have been designated as landfills in EPA's RE-Powering Matrix. landfill named—assigned in cases where EPA did not identify the site as a landfill, but the facility name includes the word "landfill." It is possible that these sites have been sufficiently cleaned or were never contaminated to the point of meeting the PCSC designation; thus, they are distinguished from EPA designated landfill sites. PCSC—when no specific designation is provided in EPA's RE-Powering Matrix, "brownfield" sites were assigned to a generalized PCSC facility type.
+p_agrivolt|string|Agrivoltaic facilities make use of the land between panel rows and surrounding arrays for agricultural (i.e., crop production or grazing) and/or ecosystem services (e.g., pollinator habitat). Agrivoltaic projects are categorized into the following designations: crop, crop,es, es, grazing, grazing,es, non-agrivoltaic.
+p_zscore|float|The Z-score of (p_cap_dc/p_area). A Z-score measures how far a record is from the mean of all records in the field in units of standard deviations. Records with high or low Z-scores may have an error in either p_cap_dc or p_area.
