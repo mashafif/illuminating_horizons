@@ -195,7 +195,7 @@ def folium_show(png_path,border_gdf,opacity=0.6,layername="Prediction",
         opacity=opacity,  # Full opacity as transparency is handled in the image
         interactive=True,
         name=layername,
-        crs=
+        #crs=
     ).add_to(m)
 
     # Add layer control to toggle layers

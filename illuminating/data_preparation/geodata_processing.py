@@ -22,18 +22,22 @@ def decimal_range(start, stop, increment):
 
 
 def download_gdf(
-    country:str="USA",
+    country:str="CONUS",
     resolution:int=1,
 ):
 
     json_root_path = os.path.dirname(os.path.dirname(__file__))
     json_path = os.path.join(json_root_path,"data_preparation","country_ISO.json")
+    conus_path = os.path.join(json_root_path,"data_preparation","CONUS.txt")
     with open(json_path,"r") as file:
         country_ISO_df = pd.DataFrame(json.load(file))
-    if len(country)!=3:
+    if country=="CONUS":
+        country_ISO = "USA"
+    elif len(country)!=3:
         country_ISO = country_ISO_df[country_ISO_df["name"]==country.title()].iloc[0]["alpha-3"]
     else:
         country_ISO=country
+
 
     file_name=f"{country_ISO}_border.geojson"
     file_dir = os.path.dirname(os.path.abspath(__file__))
@@ -49,6 +53,12 @@ def download_gdf(
         base_url = "https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41"
         download_url = f"{base_url}_{country_ISO}_{resolution}.json.zip"
         gdf = gpd.read_file(download_url)
+    if country == "CONUS":
+        with open (conus_path,"r") as f:
+            conusa = f.read().splitlines()
+        gdf = gdf[gdf.NAME_1.isin(conusa)]
+        gdf.reset_index(inplace=True)
+        gdf.drop(columns=["index"],inplace=True)
     return gdf
 
 
